@@ -12,24 +12,25 @@ func evel(i *int, tokens []string) int {
 	}
 	if tokens[*i] == "(" {
 		*i++
-		l := evel(i, tokens)
+		v := tokens[*i]
 		*i++
+		l := evel(i, tokens)
 		n := evel(i, tokens)
-		if tokens[*i] == "+" {
+		*i++
+		if v == "+" {
 			return l + n
-		} else if tokens[*i] == "-" {
+		} else if v == "-" {
 			return l - n
-		} else if tokens[*i] == "*" {
+		} else if v == "*" {
 			return l * n
 		}
-	}
-	if tokens[*i] != "(" && tokens[*i] != ")" {
+	} else {
 		k, _ := strconv.Atoi(tokens[*i])
 		return k
 	}
 }
 
-func Polish(src string) {
+func Polish(src string) int {
 	//region Scanner
 	var s scanner.Scanner
 	s.Init(strings.NewReader(src))
@@ -39,6 +40,7 @@ func Polish(src string) {
 		tokens = append(tokens, s.TokenText())
 	}
 	//endregion
-	return evel(*0, tokens)
+	idx := 0
+	return evel(&idx, tokens)
 
 }
