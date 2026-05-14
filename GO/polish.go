@@ -26,6 +26,7 @@ func evel(i *int, tokens []string) int {
 		}
 	} else {
 		k, _ := strconv.Atoi(tokens[*i])
+		*i++
 		return k
 	}
 }
